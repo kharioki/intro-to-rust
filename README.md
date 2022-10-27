@@ -110,3 +110,50 @@ fn new_new_main() {
   println!("{}", enigma); // this works because the compiler can reason about the value of the condition at compile time.
 }
 ```
+
+### Functions
+
+Functions are the primary way to organize code in Rust.
+- Functions are declared using the `fn` keyword -> `fn <function-name>(<parameter-name>: <type>) -> <return-type> { <function-body> }`
+- the rust guide recommends using `snake_case` for function names -> `fn my_function() { ... }`
+- functions don't have to appear in the file before they are called -> Rust will compile the code even if the function is called before it is defined.
+- function parameters are always defined with a type -> `fn my_function(<parameter-name>: <type>) { ... }`
+- you specify the return type of a function by using the `->` operator -> `fn my_function() -> <return-type> { ... }`
+- the body of a function is a block of code -> `{ ... }`
+- you can return a value from a function by using the `return` keyword -> `return <value>;`
+- there's a shorthand for returning a value from a function. If the last expression in a function is an expression, the function will return the value of that expression -> `fn my_function() -> <return-type> { <expression> }`
+- **Tail expressions** are expressions that are evaluated last in a function. The value of a tail expression is returned from the function.
+```rust
+  { return true; } // this is not a tail expression
+  { true } // this is a tail expression
+```
+- there's currently no support for named arguments at the call site, so you need to provide arguments in the same order as the parameters are defined in the function signature.
+
+```rust
+fn main() {
+  let x = do_stuff(2.0, 12.5);
+}
+
+fn do_stuff(x: f64, y: f64) -> f64 {
+  x + y
+}
+```
+
+- A simple rust function does not support variable number of arguments. You can use a vector to pass a variable number of arguments to a function.
+
+```rust
+fn main() {
+  let x = do_stuff(2.0, 12.5, 3.0, 4.0, 5.0);
+}
+
+fn do_stuff(x: f64, y: f64, args: Vec<f64>) -> f64 {
+  let mut sum = x + y;
+  for arg in args {
+    sum += arg;
+  }
+  sum
+}
+```
+
+- **What are macros?** Macros are a way to define code that generates other code. They are similar to functions, but instead of generating a new function, they generate new code that gets compiled with the rest of the code.
+- Macros are defined using names that end with an exclamation mark -> `macro_rules! <macro-name> { ... }`
