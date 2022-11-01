@@ -111,6 +111,7 @@ fn new_new_main() {
 }
 ```
 
+___
 ### Functions
 
 Functions are the primary way to organize code in Rust.
@@ -157,3 +158,23 @@ fn do_stuff(x: f64, y: f64, args: Vec<f64>) -> f64 {
 
 - **What are macros?** Macros are a way to define code that generates other code. They are similar to functions, but instead of generating a new function, they generate new code that gets compiled with the rest of the code.
 - Macros are defined using names that end with an exclamation mark -> `macro_rules! <macro-name> { ... }`
+
+___
+
+### Module System
+
+Modules are a way to organize code into groups of related functionality. Modules also control the privacy of items, which is whether an item can be used by outside code (public) or is an internal implementation detail and not available for outside use (private).
+
+As we write large programs, organizing our code becomes increasingly important. By grouping related functionality and separating code with distinct features, you'll clarify where to find code that implements a particular feature and where to go to change how a feature works. 
+
+As a project grows, you should organize code by splitting into multiple modules, then multiple files. 
+
+Rust has a number of features that allow you to manage your code's organization, including which details are exposed, which detaills are private, and how to bring paths into scope. These include:
+- **packages** - a Cargo feature that lets you build, test, and share crates
+- **crates** - a tree of modules that produces a library or executable
+- **modules** and **use** - let you control the organization, scope, and privacy of paths
+- **paths** - a way of naming an item, such as a struct, function, or module
+
+A _package_ is one or more crates that provide a set of functionality. A _crate_ is a binary or library. A binary is an executable, which is produced from a crate's source code. A library is code that's intended to be used with other code.
+
+A crate can come in one or two forms: a _binary crate_ or a _library crate_. A binary crate is an executable, which is produced from a crate's source code. A library crate is code that's intended to be used with other code and does not have a main function.
