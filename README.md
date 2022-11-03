@@ -1,5 +1,28 @@
 # intro-to-rust
 
+### Contents
+[what is rust?](#what-is-rust)
+[what is cargo?](#what-is-cargo)
+[starting a new project](#starting-a-new-project)
+[running a project](#running-a-project)
+[adding dependencies](#adding-dependencies)
+[adding dev dependencies](#adding-dev-dependencies)
+[running tests](#running-tests)
+[running benchmarks](#running-benchmarks)
+[what is a crate?](#what-is-a-crate)
+[rust fundamentals](#rust-fundamentals)
+[variables](#variables)
+[defining constants](#defining-constants)
+[scope and shadowing](#scope-and-shadowing)
+[memory safety](#memory-safety)
+[functions](#functions)
+[module system](#module-system)
+[primitive types](#primitive-types)
+[scalar types](#scalar-types)
+[compound types](#compound-types)
+[control flow](#control-flow)
+
+
 ### What is Rust?
 Rust is an extremely fast and powerful **systems programming language**. 
 
@@ -179,7 +202,7 @@ A _package_ is one or more crates that provide a set of functionality. A _crate_
 
 A crate can come in one or two forms: a _binary crate_ or a _library crate_. A binary crate is an executable, which is produced from a crate's source code. A library crate is code that's intended to be used with other code and does not have a main function.
 
-### Primitive Types and Control Flow
+### Primitive Types
 
 #### Scalar Types
 
@@ -280,3 +303,106 @@ fn main() {
 > **Note:** If you try to access an element using an index that is greater than or equal to the length of the array, your program will panic and exit. Rust will check that the index you've specified is less than the array length at runtime and panic if the index is out of bounds. This is an example of Rust's memory safety feature.
 
 > **Note:** Arrays are limited to a size of 32 elements. If you need to work with a larger set of data, use a vector instead.
+
+### Control Flow
+
+Control flow refers to the ability to run some code depending on some condition. Rust has three keywords for control flow: `if`, `else`, and `loop`.
+
+#### `if` Expressions
+
+An `if` expression allows you to run some code if a condition is true and run some other code if the condition is false. 
+
+```rust 
+fn main() {
+  let number = 3;
+
+  if number < 5 {
+    println!("condition was true");
+  } else {
+    println!("condition was false");
+  }
+}
+```
+
+You can also use `if` in a `let` statement. 
+
+```rust
+fn main() {
+  let condition = true;
+  let number = if condition { 5 } else { 6 };
+
+  println!("The value of number is: {}", number);
+}
+```
+
+> **Note:** The condition must be a `bool`. If it isn't, you'll get an error.
+
+#### Expressions with `else if`
+You can handle multiple conditions using `else if`.
+
+```rust
+fn main() {
+  let number = 6;
+
+  if number % 4 == 0 {
+    println!("number is divisible by 4");
+  } else if number % 3 == 0 {
+    println!("number is divisible by 3");
+  } else if number % 2 == 0 {
+    println!("number is divisible by 2");
+  } else {
+    println!("number is not divisible by 4, 3, or 2");
+  }
+}
+```
+
+#### Simplifying `if` Expressions
+
+> **Note:** - If is an expression not a statement, an expression returns a value, a statement does not. Meaning you can use it on the right side of a `let` statement.
+
+```rust
+let msg = if num == 5 { // msg is assigned the value of the expression
+  "five"  // no semicolon here -> tail expression
+} else if num == 6 {
+  "six"  // we cant use return -> return only allowed in functions
+} else {
+  "not five or six" // all return values must have the same type
+}; // semicolon here -> statement
+```
+
+One line `if` `else` expressions
+
+```rust
+num = if condition { 5 } else { 6 };
+```
+
+#### `loop` Expressions
+
+A `loop` expression allows you to loop forever or until you explicitly tell it to stop. Rust has three kinds of loops: `loop`, `while`, and `for`.
+
+```rust
+fn main() {
+  loop {
+    println!("again!");
+  }
+}
+```
+
+A loop will continue to execute until you explicitly tell it to stop. You can do this by using the `break` keyword.
+
+```rust
+fn main() {
+  let mut counter = 0;
+
+  let result = loop {
+    counter += 1;
+
+    if counter == 10 {
+      break counter * 2;
+    }
+  };
+
+  println!("The result is {}", result);
+}
+```
+
