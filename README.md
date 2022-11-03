@@ -178,3 +178,105 @@ Rust has a number of features that allow you to manage your code's organization,
 A _package_ is one or more crates that provide a set of functionality. A _crate_ is a binary or library. A binary is an executable, which is produced from a crate's source code. A library is code that's intended to be used with other code.
 
 A crate can come in one or two forms: a _binary crate_ or a _library crate_. A binary crate is an executable, which is produced from a crate's source code. A library crate is code that's intended to be used with other code and does not have a main function.
+
+### Primitive Types and Control Flow
+
+#### Scalar Types
+
+There are four primary scalar types in Rust: _integers_, _floating-point numbers_, _Booleans_, and _characters_.
+
+**Integers** are numbers without a fractional component. Rust has two integer types: _signed_ and _unsigned_. Signed integers store numbers with a negative or positive sign. Unsigned integers store only positive numbers. The `i8` type is an 8-bit signed integer, and the `u8` type is an 8-bit unsigned integer. The default integer type is `i32`. The `isize` and `usize` types depend on the kind of computer your program is running on: 64 bits if you're on a 64-bit architecture and 32 bits if you're on a 32-bit architecture.
+integer literals can be written as decimal (98_222), hexadecimal (0xff), octal (0o77), or binary (0b1111_0000), and as unsuffixed integer or as suffixed integer by the type.
+
+  | literal      | Example |
+  | :------------: | :-----------: |
+  | Decimal      | 98_222       |
+  | Hexadecimal   | 0xff        |
+  | Octal   | 0o77        |
+  | Binary   | 0b1111_0000        |
+  | Byte (u8 only)   | b'A'        |
+
+
+**Floating-Point Types** are numbers with a fractional component. Rust has two primitive types for floating-point numbers: `f32` and `f64`. The default type is `f64` because on modern CPUs it's roughly the same speed as `f32` but is capable of more precision. Floating point numbers follow the IEEE-754 standard. You do always need to have atleast one digit before and after the decimal point.
+
+you can suffix integers and floating-point numbers with the type of number as well: `5u16` or `5_u16`, `57.0f64` or `57f64`.
+
+**Boolean Type** is a type that has only two possible values: `true` and `false`. Booleans are one byte in size. The boolean type is specified using the `bool` keyword.
+
+**Character Type** is the most primitive alphabetic type, and the `char` type is four bytes in size and represents a Unicode Scalar Value, which means it can represent a lot more than just ASCII. Unicode Scalar Values range from `U+0000` to `U+D7FF` and `U+E000` to `U+10FFFF` inclusive. Rust's `char` type is four bytes in size and represents a Unicode Scalar Value, which means it can represent a lot more than just ASCII. Unicode Scalar Values range from `U+0000` to `U+D7FF` and `U+E000` to `U+10FFFF` inclusive. Accented letters, Chinese/Japanese/Korean characters, emoji, and zero-width spaces are all valid `char` values in Rust. The `char` type is specified with single quotes, as opposed to the double quotes used for `String` values.
+
+#### Compound Types
+
+Compound types can group multiple values into one type. Rust has two primitive compound types: _tuples_ and _arrays_.
+
+**Tuples** are a general way of grouping together a number of values with a variety of types into one compound type. 
+- Tuples have a fixed length: once declared, they cannot grow or shrink in size. 
+- Tuples are useful when you want to return multiple values from a function. 
+- Tuples are created using parentheses `()`. 
+- Each position in the tuple has a type, and the types of the different values in the tuple don't have to be the same. Tuples can be destructured to create bindings to their individual pieces.
+
+```rust
+fn main() {
+  let tup: (i32, f64, u8) = (500, 6.4, 1);
+  let (x, y, z) = tup;
+  println!("The value of y is: {}", y);
+}
+```
+
+There are two ways to access members of a tuple: destructuring and dot notation. 
+- _Destructuring_ is a convenient way to assign a tuple's values to variables. 
+- _Dot notation_ is a convenient way to access a tuple's individual values.
+
+```rust
+fn main() {
+  let tup: (i32, f64, u8) = (500, 6.4, 1);
+  let five_hundred = tup.0;
+  let six_point_four = tup.1;
+  let one = tup.2;
+
+  // destructuring
+  let (x, y, z) = tup;
+  println!("The value of y is: {}", y);
+}
+```
+
+_A tuple has a maximum **arity** of 12. Meaning, a tuple can have a maximum of 12 elements_
+
+**Arrays** are similar to tuples, but every element of an array must have the same type. Arrays in Rust are different from arrays in some other languages because arrays in Rust have a fixed length, like tuples.
+
+Arrays are useful when you want your data allocated on the stack rather than the heap or when you want to ensure you always have a fixed number of elements. 
+
+Arrays are created using square brackets `[]`. The type of the array and the length of the array are both required. The length of the array is part of its type. 
+
+```rust
+fn main() {
+  let a = [1, 2, 3, 4, 5];
+  let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+  let a: [i32; 5] = [1, 2, 3, 4, 5]; // here the type is i32 and the length is 5
+  let a = [3; 5];
+}
+```
+
+You can also initialize an array to contain the same value for each element by specifying initial value followed by a semicolon and then the length of the array in square brackets.
+
+```rust
+fn main() {
+  let a = [3; 5];
+  println!("{:?}", a); // [3, 3, 3, 3, 3]
+}
+```
+
+You can access an array element by indexing the array. The index of an array starts at 0. 
+
+```rust
+fn main() {
+  let a = [1, 2, 3, 4, 5];
+  let first = a[0];
+  let second = a[1];
+}
+```
+
+> **Note:** If you try to access an element using an index that is greater than or equal to the length of the array, your program will panic and exit. Rust will check that the index you've specified is less than the array length at runtime and panic if the index is out of bounds. This is an example of Rust's memory safety feature.
+
+> **Note:** Arrays are limited to a size of 32 elements. If you need to work with a larger set of data, use a vector instead.
