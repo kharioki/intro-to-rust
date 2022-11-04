@@ -412,3 +412,72 @@ fn main() {
 }
 ```
 
+Breaking out of a nested loop
+
+```rust
+fn main() {
+  let mut counter = 0;
+
+  'outer: loop { // annotate the loop with a label
+    println!("Entered the outer loop");
+
+    'inner: loop {
+      println!("Entered the inner loop");
+
+      counter += 1;
+
+      if counter == 10 {
+        break 'outer; // break out of the outer loop
+      }
+    }
+  }
+
+  println!("Exited the outer loop");
+}
+```
+
+`continue` keyword - skips the rest of the current iteration and continues with the next one.
+
+```rust
+'outer: loop {
+  println!("Entered the outer loop");
+
+  'inner: loop {
+    println!("Entered the inner loop");
+
+    if true {
+      continue 'outer; // continue to the next iteration of the outer loop
+    }
+
+    println!("This point will never be reached");
+  }
+
+  println!("This point will never be reached");
+}
+```
+
+**`while`** loops - have the same behaviour as unconditional loops except they terminate when the condition is no longer true.
+
+```rust
+fn main() {
+  let mut number = 3;
+
+  while number != 0 {
+    println!("{}!", number);
+
+    number -= 1;
+  }
+
+  println!("LIFTOFF!!!");
+}
+```
+
+You can imitate a while loop by putting a negated condition at the top of a loop and using `break` to exit the loop when the condition is true.
+
+```rust
+loop {
+  if !some_condition() {
+    break;
+  }
+}
+```
